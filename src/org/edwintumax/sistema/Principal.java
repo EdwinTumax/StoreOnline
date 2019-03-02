@@ -4,12 +4,30 @@ import java.util.Date;
 import org.edwintumax.bean.Book;
 import org.edwintumax.exception.ValidarException;
 import org.edwintumax.util.ManejadorDeArchivos;
-
+import org.edwintumax.interfaces.OnClickListener;
 public class Principal {
 
     public static void main(String args[]) {
+        
+        OnClickListener onClickListener = new OnClickListener() {
+            @Override
+            public void onClick(String mensaje) {
+                System.out.println("Un : " + mensaje);
+            }
+        };
+        onClickListener.onClick("Click en el panel de control");
+        
+        OnClickListener onClickListenerLambda = (String mensaje) -> { 
+            System.out.println("Un: " + mensaje);
+        };
+        onClickListenerLambda.onClick("Click derecho en el escritorio de windows");
+        
+        
+        /*int n = 100;
+        int m = 100 / 2;
+        assert n != m * 2 : "Los valores son iguales";
         try {
-            String authors[] = {"Juan Perez", "Julio Martinez"};
+            /*String authors[] = {"Juan Perez", "Julio Martinez"};
             Book lista[] = new Book[5];
             lista[0] = new Book("Book1", new Date(), "Editorial 1", authors);
             lista[1] = new Book("Book2", new Date(), "Editorial 2", authors);
@@ -23,7 +41,9 @@ public class Principal {
             lista[4].setIsbn("5555");
             imprimirLibros(lista);
             guardarInformacion(lista);
-        } catch (ValidarException e) {
+            mostrarInformacion("books.txt");
+
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         } finally {
             System.out.println("Esto siempre se ejecuta si o no, existe un exception");
@@ -55,5 +75,10 @@ public class Principal {
         for (int i = 0; i < libros.length; i++) {
             manejador.escribir(libros[i].toString());
         }
+    }
+
+    public static void mostrarInformacion(String archivo) {
+        ManejadorDeArchivos manejador = new ManejadorDeArchivos(archivo);
+        System.out.println(manejador.leer(archivo));
     }
 }
